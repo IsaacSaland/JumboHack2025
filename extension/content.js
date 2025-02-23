@@ -24,12 +24,15 @@ function displayDiv(tokenCount) {
     div.style.display = 'flex';
     div.style.gap = '10px';
     div.style.padding = '10px';
+    div.style.flex = 'center';
+    div.style.alignItems = 'center';
+    div.style.justifyContent = 'center';
   
     div.innerHTML = `
-        <span>Token Count: ${tokenCount}</span>
-        <span>Joules of Energy: ${tokenCount * 4}</span>
-        <span>Liters of Water: ${tokenCount * 1}</span>
-        <span>Grams of CO₂: ${tokenCount * 1}</span>
+        <span>Token Count: <i style="color: green";>${tokenCount}</i></span>
+        <span>Energy 🔌: <i style="color: green";>${(tokenCount * (4) * (1) * (1)).toFixed(4)}J</i></span>
+        <span>Water 💧: <i style="color: green";>${(tokenCount * (0.167) * (1)).toFixed(4)}mL</i></span>
+        <span>CO₂ 💨: <i style="color: green";>${(tokenCount * (4) * (475) * (1/3600000)).toFixed(4)}g</i></span>
       `;
     return div;
   }

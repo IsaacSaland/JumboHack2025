@@ -1,6 +1,6 @@
 # SustainabilityGPT
 
-![Cyborg Hand Holding Sapling](image.webp)
+![Cyborg Hand Holding Sapling](logo.jpg)
 
 ## Our Team: The Gersons
 - Brian Becker - Website
@@ -21,7 +21,7 @@ Large language models are a powerful technology; however they are extremely powe
 
 ### Awareness
 
-We've created multiple TOOLS to quantify the environmental impact for generating text. We've created 2 primary tools:
+We've created multiple TOOLS to quantify the environmental impact for generating text. They are:
 
 1. **Live Resource Consumption Chrome Extension** We've created a chrome extensions that predicts/tracks the live resource consumption. It displays live estimates estimate the energy, water, and CO2 used in a given chat. It updates as new text is being produced. Additionally, our extension supports the predicting the resource consumption of generating a certain text from multiple file formats (.txt, .pdf, .docx). This allows the individual to quantify their AI's **day-to-day** usage on the environment. 
 
