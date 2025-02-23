@@ -1,4 +1,4 @@
-# SustainabilityGPT
+# GPTgreen
 
 ![Cyborg Hand Holding Sapling](image.webp)
 
