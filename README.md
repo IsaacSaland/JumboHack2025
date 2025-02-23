@@ -12,7 +12,7 @@
 
 ## Description
 
-Did you know that some scientists predict AI is going to cause CO2 emissions in certain American cities to double over the next 10 years?
+Did you know that some scientists predict AI is going to cause CO<sub>2</sub> emissions in certain American cities to double over the next 10 years?
 
 Large language models are a powerful technology; however they are extremely power intensive. This resource intensive technology drains electricity, guzzles water, and spews CO2. As a group, we aimed to:
 
@@ -36,7 +36,7 @@ While this is a complex issue, there is one relatively way to reduce the footpri
 ## Acknowledgements  
 - ChatGPT itself was used about everywhere in this codebase.
 - We used GPT-Tokenizer to count the tokens in text. This was instrumental to our model.
-- Big thanks to Ethan Siskel for the idea!
+- Big thanks to Ethan Siskel for this idea!
 
 <!-- ## Reflection  
 
