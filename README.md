@@ -14,7 +14,7 @@
 
 Did you know that some scientists predict AI is going to cause CO<sub>2</sub> emissions in certain American cities to double over the next 10 years?
 
-Large language models are a powerful technology; however they are extremely power intensive. This resource intensive technology drains electricity, guzzles water, and spews CO2. As a group, we aimed to:
+Large language models are a powerful technology; however they are extremely power intensive. This resource intensive technology drains electricity, guzzles water, and spews CO<sub>2</sub>. As a group, we aimed to:
 
 - **Spread awareness about one's own environmental impact**
 - **Reduce one's own environmental impact**
@@ -23,7 +23,7 @@ Large language models are a powerful technology; however they are extremely powe
 
 We've created multiple TOOLS to quantify the environmental impact for generating text. They are:
 
-1. **Live Resource Consumption Chrome Extension** We've created a chrome extensions that predicts/tracks the live resource consumption. It displays live estimates estimate the energy, water, and CO2 used in a given chat. It updates as new text is being produced. Additionally, our extension supports the predicting the resource consumption of generating a certain text from multiple file formats (.txt, .pdf, .docx). This allows the individual to quantify their AI's **day-to-day** usage on the environment. 
+1. **Live Resource Consumption Chrome Extension** We've created a chrome extensions that predicts/tracks the live resource consumption. It displays live estimates estimate the energy, water, and CO<sub>2</sub> used in a given chat. It updates as new text is being produced. Additionally, our extension supports the predicting the resource consumption of generating a certain text from multiple file formats (.txt, .pdf, .docx). This allows the individual to quantify their AI's **day-to-day** usage on the environment. 
 
 2. **Long-Term Resource Consumption Analytics** In a few short steps we've created a website that shows your long term resource consumption. TBC. This allows the individual to quantify their AI's **long-term** usage on the environment. 
 
