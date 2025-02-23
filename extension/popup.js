@@ -26,6 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 chrome.storage.local.set({ lifetimeTokens: lifetimeTokens });
         }
 
+        document.getElementById("fileInput").addEventListener("change", function () {
+                const file = this.files[0];
+                const fileUploadStatus = document.getElementById("fileUploadStatus");
+                if (file) {
+                        fileUploadStatus.textContent = `File selected: ${file.name}`;
+                } else {
+                        fileUploadStatus.textContent = "No file selected";
+                }
+        });
+        
         countButton.addEventListener("click", function () {
                 const text = textInput.value;
                 if (!text) {
