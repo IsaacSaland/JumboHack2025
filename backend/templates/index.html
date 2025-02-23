@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask & JavaScript</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <!-- <h2>Flask & JavaScript Integration</h2>
-    <input type="text" id="userInput" placeholder="Enter text">
-    <button onclick="sendData()">Send to Flask</button>
-    <p id="response"></p> -->
     <nav>
         <div class="logo">
-            <img src="logo.jpg" alt="Logo">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo">
+            <p>logo</p>
         </div>
     </nav>
 
     <div class="outerContain">
         <div class="upload-container">
+            <form method="post" enctype="multipart/form-data" action="/upload"></form>
             <input type="file" id="fileInput" accept=".zip" hidden />
             <label for="fileInput" class="upload-label">
                 <span class="plus">+</span> 
@@ -32,27 +30,27 @@
         <h2>About Us</h2>
         <div class="team-container">
             <div class="team-member">
-                <img src="horse.png" alt="Person 1">
+                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 1">
                 <p>Brian Becker</p>
             </div>
             <div class="team-member">
-                <img src="horse.png" alt="Person 2">
+                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 2">
                 <p>Benson Jiang</p>
             </div>
             <div class="team-member">
-                <img src="horse.png" alt="Person 3">
+                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 3">
                 <p>Bryan Cho</p>
             </div>
             <div class="team-member">
-                <img src="horse.png" alt="Person 4">
+                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 4">
                 <p>Issac Salad</p>
             </div>
             <div class="team-member">
-                <img src="horse.png" alt="Person 5">
+                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 5">
                 <p>Seth Lupo</p>
             </div>
             <div class="team-member">
-                <img src="horse.png" alt="Person 6">
+                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 6">
                 <p>Yuvit Batra</p>
             </div>
         </div>
@@ -64,10 +62,32 @@
 
         ADD RESEARCH PAPER AND MOR
     </div>
-    
 
-    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
 
-    <script src="script.js"></script>
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please select a file to upload.');
+            }
+        });
+    </script>
 </body>
 </html>
