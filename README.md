@@ -36,6 +36,7 @@ While this is a complex issue, there is one relatively way to reduce the footpri
 ## Acknowledgements  
 - ChatGPT itself was used about everywhere in this codebase.
 - We used GPT-Tokenizer to count the tokens in text. This was instrumental to our model.
+- Big thanks to Ethan Siskel for the idea!
 
 <!-- ## Reflection  
 
