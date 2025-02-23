@@ -1,3 +1,5 @@
+alert("HELLO!!!! from popup js")
+
 document.addEventListener("DOMContentLoaded", function () {
         const textInput = document.getElementById("textInput");
         const countButton = document.getElementById("countButton");
@@ -162,3 +164,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+        const patchToggle = document.getElementById("patchToggle");
+    
+        // Load saved state from Chrome Storage
+        chrome.storage.sync.get(["patchEnabled"], function (data) {
+            patchToggle.checked = data.patchEnabled || false;
+        });
+    
+        // Toggle Patcher Behavior (Change the prepended text)
+        patchToggle.addEventListener("change", function () {
+            const isEnabled = patchToggle.checked;
+            chrome.storage.sync.set({ patchEnabled: isEnabled });
+    
+            console.log("🔵 Sending message to background to", isEnabled ? "ENABLE" : "DISABLE");
+    
+            chrome.runtime.sendMessage({ action: "updatePatcher", enabled: isEnabled }, function(response) {
+                console.log("🟢 Background response received:", response);
+            });
+        });
+    });
