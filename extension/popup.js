@@ -1,5 +1,3 @@
-alert("HELLO!!!! from popup js")
-
 document.addEventListener("DOMContentLoaded", function () {
         const textInput = document.getElementById("textInput");
         const countButton = document.getElementById("countButton");
@@ -72,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function countTokens(text) {
+                console.log("YUVIT 1")
                 try {
                         const tokens = GPTTokenizer_cl100k_base.encode(text);
                         const tokenCount = tokens.length;
