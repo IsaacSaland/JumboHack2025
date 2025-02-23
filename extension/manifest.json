@@ -1,9 +1,20 @@
 {
         "manifest_version": 3,
-        "name": "Token Counter",
-        "version": "1.0",
+        "name": "Page Counter & Wikipedia Embed",
+        "version": "1.1",
+        "description": "A counter embedded in both the page and popup, with Wikipedia content.",
+        "permissions": ["storage"],
+        "host_permissions": ["https://chatgpt.com/*"],
         "action": {
                 "default_popup": "popup.html"
         },
-        "permissions": []
+        "background": {
+                "service_worker": "background.js"
+        },
+        "content_scripts": [
+                {
+                "matches": ["https://chatgpt.com/*"],
+                "js": ["content.js"]
+                }
+        ]
 }
