@@ -3,102 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Consumption Analyzer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>GPTgreen - AI & Environment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000000;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .jumbotron {
+            background-color: #1a1a1a;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 4px solid #4CAF50;
+        }
+
+        .jumbotron h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #121212;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #4CAF50;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .team-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .team-list li {
+            font-size: 14px;
+            padding: 5px 0;
+        }
+
+        .research-section {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">
-            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo">
-            <p>logo</p>
-        </div>
-    </nav>
-
-    <div class="outerContain">
-        <div class="upload-container">
-            <input type="file" id="fileInput" accept=".zip" hidden />
-            <label for="fileInput" class="upload-label">
-                <span class="plus">+</span> 
-                <p>Upload ZIP File</p>
-            </label>
-        </div>
-        <button id="sendButton" class="send-btn">Send File</button>
+    <div class="jumbotron">
+        <h1><a style="color: inherit; text-decoration: none; cursor: pointer;" href="/">GPTgreen</a></h1>
+        <p>AI is powerful, but it comes at an environmental cost. Learn how to track and reduce your AI energy footprint.</p>
     </div>
 
-    <div class="lowerAbout">
-        <h2>About Us</h2>
-        <div class="team-container">
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 1">
-                <p>Brian Becker</p>
-            </div>
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 2">
-                <p>Benson Jiang</p>
-            </div>
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 3">
-                <p>Bryan Cho</p>
-            </div>
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 4">
-                <p>Issac Salad</p>
-            </div>
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 5">
-                <p>Seth Lupo</p>
-            </div>
-            <div class="team-member">
-                <img src="{{ url_for('static', filename='horse.png') }}" alt="Person 6">
-                <p>Yuvit Batra</p>
-            </div>
+    <div class="container">
+        <h2>Our Team: The Gersons</h2>
+        <ul class="team-list">
+            <li>Brian Becker - Website</li>
+            <li>Benson Jiang - Website</li>
+            <li>Isaac Saland - Website</li>
+            <li>Bryan Cho - Chrome Extension</li>
+            <li>Seth Lupo - Chrome Extension</li>
+            <li>Yuvit Batra - Chrome Extension</li>
+        </ul>
+
+        <h2>Description</h2>
+        <p>Large language models consume significant resources, leading to increased CO<sub>2</sub> emissions. GPTgreen aims to spread awareness and provide tools to quantify and reduce the environmental impact of AI usage.</p>
+
+        <h2>Awareness</h2>
+        <p>We have developed tools to track AI-generated resource consumption:</p>
+        <ul>
+            <li><strong>Live Resource Consumption Chrome Extension</strong> - Tracks real-time energy, water, and CO<sub>2</sub> usage while using AI.</li>
+            <li><strong>Long-Term Resource Consumption Analytics</strong> - A website that aggregates long-term AI energy consumption data.</li>
+        </ul>
+
+        <h2>Reduction</h2>
+        <p>Our Chrome Extension includes an "Energy Saver" mode, which automatically optimizes queries to minimize text generation and reduce environmental impact.</p>
+
+        <div class="research-section">
+            <h2>Research & Sources</h2>
+            <p>We base our calculations on peer-reviewed research and provide sources on our website to ensure transparency.</p>
+            <p><a href="/report" style="color: #4CAF50; text-decoration: none;">View Full Report</a></p>
         </div>
     </div>
-
-    <div class="project_des">
-        <h1>Project Information</h1>
-        Our platform is dedicated to raising awareness about the environmental impact of AI models like ChatGPT, particularly their energy consumption and carbon footprint. By educating users on the hidden costs of large-scale AI operations, we aim to inspire more sustainable tech practices and encourage responsible AI usage.
-    </div>
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <script>
-        document.getElementById('sendButton').addEventListener('click', function() {
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-
-            if (file) {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
-                        return response.blob();
-                    } else {
-                        throw new Error('File upload failed');
-                    }
-                })
-                .then(blob => {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'energy_report.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    window.URL.revokeObjectURL(url);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('File upload failed. Please try again.');
-                });
-            } else {
-                alert('Please select a file to upload.');
-            }
-        });
-    </script>
 </body>
 </html>

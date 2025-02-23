@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Inter', sans-serif;
+            margin: 8px;
+            padding: 8px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            color: #4CAF50;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 900px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+
+        .instructions {
+            flex: 1;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .upload-container {
+            flex: 1;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #4CAF50;
+            transition: background-color 0.3s;
+        }
+
+        .upload-container.dragover {
+            background-color: #e0f2e9;
+        }
+
+        .upload-label {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .upload-label:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .send-btn {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .upload-status, #fileNameDisplay {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #4CAF50;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .upload-status.visible, #fileNameDisplay.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>GPTgreen</h1>
+        <h1>Long Term Analysis</h1>
+    </div>
+
+    <div class="content">
+        <div class="instructions">
+            <p>To analyze your long-term AI usage, download your chat history from OpenAI:</p>
+            <ol>
+                <li>Go to your <a href="https://platform.openai.com/" target="_blank" style="color: #4CAF50;">OpenAI account</a></li>
+                <li>Navigate to settings and request a data export.</li>
+                <li>Download the ZIP file once you receive the email.</li>
+                <li>Upload the ZIP file using the form below.</li>
+                <li>Once processed, you will receive a downloadable report.</li>
+            </ol>
+        </div>
+
+        <div class="upload-container" id="drop-area">
+            <form method="post" enctype="multipart/form-data" action="/upload">
+                <input type="file" id="fileInput" accept=".zip" hidden />
+                <label for="fileInput" class="upload-label">
+                    <span class="plus">+</span> 
+                    <p>Upload ZIP File</p>
+                </label>
+                <p>Or drag and drop your file here</p>
+            </form>
+            <p id="fileNameDisplay" class="upload-status"></p>
+            <button id="sendButton" class="send-btn">Send File</button>
+            <p id="uploadStatus" class="upload-status">Uploading...</p>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const sendButton = document.getElementById('sendButton');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('dragover');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragover');
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('dragover');
+            fileInput.files = event.dataTransfer.files;
+            updateFileName();
+        });
+
+        fileInput.addEventListener('change', updateFileName);
+
+        function updateFileName() {
+            const file = fileInput.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `Selected file: ${file.name}`;
+                fileNameDisplay.classList.add('visible');
+            } else {
+                fileNameDisplay.textContent = "";
+                fileNameDisplay.classList.remove('visible');
+            }
+        }
+
+        sendButton.addEventListener('click', function() {
+            const file = fileInput.files[0];
+
+            if (file) {
+                uploadStatus.textContent = "Uploading...";
+                uploadStatus.classList.add("visible");
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    uploadStatus.textContent = data.message;
+                    setTimeout(() => {
+                        uploadStatus.classList.remove("visible");
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    uploadStatus.textContent = "Upload failed.";
+                    setTimeout(() => {
+                        uploadStatus.classList.remove("visible");
+                    }, 3000);
+                });
+            } else {
+                alert('Please select a file to upload.');
+            }
+        });
+    </script>
+</body>
+</html>
