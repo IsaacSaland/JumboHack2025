@@ -83,104 +83,82 @@ def upload_file():
             total_joules, daily, monthly, yearly = ttk(file_path)
             print("done with call tiktoken")
 
+            # Extract values
+            dates = daily['date'].astype(str).tolist()  # Ensure dates are strings
+            energy_costs = daily['energy_cost_joules'].tolist()
+            # Create the plot
             # Create the plot
             fig, ax = plt.subplots(figsize=(10, 5))
-            ax.plot(daily[0], daily[1], marker='o', linestyle='-')
-            print("plotting daily")
+            ax.plot(dates, energy_costs, marker='o', linestyle='-', color='red')  # Using red to distinguish from frequency plot
+            print("plotting energy costs")
 
             plt.xlabel('Date')
-            plt.ylabel('Energy Consumption (Joules)')
-            plt.title('Energy Consumption By Month')
+            plt.ylabel('Energy Cost (Joules)')
+            plt.title('Energy Cost By Day')
             plt.xticks(rotation=45)
             plt.grid()
             
 
             # Save the plot to a PNG file
-            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot.png')
+            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_daily.png')
             plt.savefig(plot_filename, format='png')
             plt.close(fig)
             print("image saved to", plot_filename)
 
 
-
-
-             # Create the plot
+            # Extract values
+            dates = monthly['date'].astype(str).tolist()  # Ensure dates are strings
+            energy_costs = monthly['energy_cost_joules'].tolist()
+            # Create the plot
+            # Create the plot
             fig, ax = plt.subplots(figsize=(10, 5))
-            ax.plot(monthly[0], monthly[1], marker='o', linestyle='-')
-            print("plotting monthly")
+            ax.plot(dates, energy_costs, marker='o', linestyle='-', color='red')  # Using red to distinguish from frequency plot
+            print("plotting energy costs")
 
             plt.xlabel('Date')
-            plt.ylabel('Energy Consumption (Joules)')
-            plt.title('Energy Consumption By Month')
+            plt.ylabel('Energy Cost (Joules)')
+            plt.title('Energy Cost By Month')
             plt.xticks(rotation=45)
             plt.grid()
             
 
             # Save the plot to a PNG file
-            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_monthly.png')
+            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_month.png')
             plt.savefig(plot_filename, format='png')
             plt.close(fig)
             print("image saved to", plot_filename)
 
 
 
+            # Save the plot to a PNG file
+            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_daily.png')
+            plt.savefig(plot_filename, format='png')
+            plt.close(fig)
+            print("image saved to", plot_filename)
 
 
-
-             # Create the plot
+            # Extract values
+            dates = yearly['date'].astype(str).tolist()  # Ensure dates are strings
+            energy_costs = yearly['energy_cost_joules'].tolist()
+            # Create the plot
+            # Create the plot
             fig, ax = plt.subplots(figsize=(10, 5))
-            ax.plot(yearly[0], yearly[1], marker='o', linestyle='-')
-            print("plotting yearly")
+            ax.plot(dates, energy_costs, marker='o', linestyle='-', color='red')  # Using red to distinguish from frequency plot
+            print("plotting energy costs")
 
             plt.xlabel('Date')
-            plt.ylabel('Energy Consumption (Joules)')
-            plt.title('Energy Consumption By Month')
+            plt.ylabel('Energy Cost (Joules)')
+            plt.title('Energy Cost By Year')
             plt.xticks(rotation=45)
             plt.grid()
             
 
             # Save the plot to a PNG file
-            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_yea.png')
+            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_year.png')
             plt.savefig(plot_filename, format='png')
             plt.close(fig)
             print("image saved to", plot_filename)
 
-
-
-
-
-
-
-
-
-
-
-            # Save daily plot
-            # print(daily_plot_path = save_plot(
-            #     daily,
-            #     x_label='Date',
-            #     y_label='Energy Consumption',
-            #     title='Daily Energy Consumption Over Time',
-            #     filename='daily_energy_consumption.png'
-            # ))
-
-            # # Save monthly plot
-            # print(monthly_plot_path = save_plot(
-            #     monthly,
-            #     x_label='Date',
-            #     y_label='Energy Consumption',
-            #     title='Monthly Energy Consumption Over Time',
-            #     filename='monthly_energy_consumption.png'
-            # ))
-
-            # # Save yearly plot
-            # print(yearly_plot_path = save_plot(
-            #     yearly,
-            #     x_label='Date',
-            #     y_label='Energy Consumption',
-            #     title='Yearly Energy Consumption Over Time',
-            #     filename='yearly_energy_consumption.png'
-            # ))
 
             return jsonify({"message": "File uploaded and plot saved successfully", "plot_filename": plot_filename}), 200
         except Exception as e:

@@ -217,154 +217,24 @@ def ttk(file_path):
     yearly_frequencies = get_yearly_frequencies(timestamp_frequencies)
 
 
-    def compute_energy_consumption(time_frequencies):
-        # Convert timestamps to datetime and create a DataFrame
-        df = pd.DataFrame(time_frequencies, columns=['date', 'frequency'])
+    def calculate_energy_costs(timestamp_frequencies):
+    
+        # First get daily frequencies using existing function
+        daily_freq_df = get_daily_frequencies(timestamp_frequencies)
+        
+        # Create new DataFrame for energy costs
+        energy_costs_df = pd.DataFrame({
+            'date': daily_freq_df['period'],
+            'energy_cost_joules': daily_freq_df['frequency'] * 4
+        })
+        
+        # Ensure date column matches original format
+        energy_costs_df = energy_costs_df.sort_values('date')
+        
+        return energy_costs_df
 
-        # Convert frequency to energy consumption (joules)
-        df['energy_joules'] = df['frequency'] * 4
-
-        # Convert string dates to datetime
-        df['date'] = pd.to_datetime(df['date'], format='%m%d%Y')
-
-        # Convert back to mmddyyyy format
-        df['date'] = df['date'].dt.strftime('%m%d%Y')
-
-        # Return a list of tuples (date in mmddyyyy, energy in joules)
-        return list(df.itertuples(index=False, name=None))
-
-    df_daily = compute_energy_consumption(daily_frequencies)
-    df_monthly = compute_energy_consumption(monthly_frequencies)
-    df_yearly = compute_energy_consumption(yearly_frequencies)
+    df_daily = calculate_energy_costs(timestamp_frequencies)
+    df_monthly = calculate_energy_costs(timestamp_frequencies)
+    df_yearly = calculate_energy_costs(timestamp_frequencies)
 
     return total_joules, df_daily, df_monthly, df_yearly
-    # def plot_energy_consumption(time_frequencies):
-    #     # Convert timestamps to datetime and create a DataFrame
-    #     df = pd.DataFrame(time_frequencies, columns=['date', 'frequency'])
-
-    #     # Convert frequency to energy consumption (joules)
-    #     df['energy_joules'] = df['frequency'] * 4
-
-    #     # Convert string dates to datetime
-    #     df['date'] = pd.to_datetime(df['date'], format='%m%d%Y')
-
-    #     # Create month-year string and group by it
-    #     df['month_year'] = df['date'].dt.strftime('%m-%Y')
-    #     monthly_totals = df.groupby('month_year')['energy_joules'].sum().reset_index()
-
-    #     # Sort by actual date to ensure chronological order
-    #     monthly_totals['sort_date'] = pd.to_datetime(monthly_totals['month_year'], format='%m-%Y')
-    #     monthly_totals = monthly_totals.sort_values('sort_date')
-
-    #     # Create the plot
-    #     plt.figure(figsize=(12, 6))
-    #     bars = plt.bar(monthly_totals['month_year'], monthly_totals['energy_joules'])
-
-    #     # Customize the plot
-    #     plt.xticks(rotation=45, ha='right')
-    #     plt.xlabel('Month-Year')
-    #     plt.ylabel('Energy Consumption (Joules)')
-    #     plt.title('Monthly Energy Consumption Distribution')
-
-    #     # Add grid for better readability
-    #     plt.grid(axis='y', linestyle='--', alpha=0.7)
-
-    #     # Adjust layout to prevent label cutoff
-    #     plt.tight_layout()
-
-    #     return plt
-
-    # Use the function
-    # monthly_energy = plot_energy_consumption(timestamp_frequencies)
-    # monthly_energy.show()
-
-    
-
-    # monthly_frequencies
-
-    # def process_energy_consumption(frequencies, joules_per_query):
-    #     """
-    #     Process frequency data and calculate energy consumption
-
-    #     Args:
-    #         frequencies: DataFrame with columns ['period', 'frequency']
-    #         joules_per_query: Energy consumption per query in joules
-
-    #     Returns:
-    #         dates: List of formatted dates
-    #         energy_values: List of energy consumption values
-    #         time_unit: Automatically detected time unit (Day/Month/Year)
-    #     """
-    #     dates = []
-    #     energy_values = []
-
-    #     # Ensure we have a DataFrame
-    #     if not isinstance(frequencies, pd.DataFrame):
-    #         raise ValueError("Input must be a pandas DataFrame")
-
-    #     # Get sample period from first row
-    #     sample_period = str(frequencies.iloc[0]['period'])
-
-    #     # Determine the time unit and format based on period structure
-    #     if len(sample_period) == 8:  # mmddyyyy
-    #         date_format = '%m%d%Y'
-    #         time_unit = 'Day'
-    #     elif len(sample_period) == 6:  # mmyyyy
-    #         date_format = '%m%Y'
-    #         time_unit = 'Month'
-    #     else:  # yyyy
-    #         date_format = '%Y'
-    #         time_unit = 'Year'
-
-    #     # Process each row
-    #     for _, row in frequencies.iterrows():
-    #         period = str(row['period'])
-    #         freq = float(row['frequency'])
-
-    #         # Convert period string to datetime
-    #         date = datetime.strptime(period, date_format)
-
-    #         # Calculate energy consumption
-    #         energy = freq * joules_per_query
-
-    #         dates.append(date)
-    #         energy_values.append(energy)
-
-    #     return dates, energy_values, time_unit
-
-    # def plot_energy_histogram(dates, energy_values, time_unit):
-    #     plt.figure(figsize=(10, 6))
-
-    #     # Set bar width based on time unit
-    #     if time_unit == 'Day':
-    #         width = 1  # Default width for daily data
-    #     elif time_unit == 'Month':
-    #         width = 20  # Wider bars for monthly data
-    #     elif time_unit == 'Year':
-    #         width = 200  # Even wider bars for yearly data
-
-    #     plt.bar(dates, energy_values, width=width, color='blue')  # Set the width parameter
-    #     plt.xlabel('Date')
-    #     plt.ylabel('Energy Consumption (Joules)')
-    #     plt.title(f'Energy Consumption per {time_unit}')
-
-    #     # Format dates on x-axis based on time unit
-    #     if time_unit == 'Day':
-    #         plt.gca().xaxis.set_major_formatter(DateFormatter('%m/%d/%Y'))
-    #     elif time_unit == 'Month':
-    #         plt.gca().xaxis.set_major_formatter(DateFormatter('%m/%Y'))
-    #     elif time_unit == 'Year':
-    #         plt.gca().xaxis.set_major_formatter(DateFormatter('%Y'))
-
-    #     plt.xticks(rotation=45)
-    #     plt.tight_layout()
-    #     plt.show()
-
-    # Example usage
-    # daily_frequency_energy = process_energy_consumption(daily_frequencies, joules_per_query)
-    # monthly_frequency_energy = process_energy_consumption(monthly_frequencies, joules_per_query)
-    # yearly_frequency_energy = process_energy_consumption(yearly_frequencies, joules_per_query)
-
-    # daily_frequency_energy_plt = plot_energy_histogram(*daily_frequency_energy)
-    # monthly_frequency_energy_plt = plot_energy_histogram(*monthly_frequency_energy)
-    # yearly_frequency_energy_plt = plot_energy_histogram(*yearly_frequency_energy)
