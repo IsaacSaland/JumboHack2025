@@ -88,7 +88,7 @@ def upload_file():
             energy_costs = daily['energy_cost_joules'].tolist()
             # Create the plot
             # Create the plot
-            fig, ax = plt.subplots(figsize=(10, 5))
+            fig, ax = plt.subplots(figsize=(10, 8))
             ax.plot(dates, energy_costs, marker='o', linestyle='-', color='red')  # Using red to distinguish from frequency plot
             print("plotting energy costs")
 
@@ -111,7 +111,7 @@ def upload_file():
             energy_costs = monthly['energy_cost_joules'].tolist()
             # Create the plot
             # Create the plot
-            fig, ax = plt.subplots(figsize=(10, 5))
+            fig, ax = plt.subplots(figsize=(10, 8))
             ax.plot(dates, energy_costs, marker='o', linestyle='-', color='red')  # Using red to distinguish from frequency plot
             print("plotting energy costs")
 
@@ -129,20 +129,12 @@ def upload_file():
             print("image saved to", plot_filename)
 
 
-
-            # Save the plot to a PNG file
-            plot_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_consumption_plot_daily.png')
-            plt.savefig(plot_filename, format='png')
-            plt.close(fig)
-            print("image saved to", plot_filename)
-
-
             # Extract values
             dates = yearly['date'].astype(str).tolist()  # Ensure dates are strings
             energy_costs = yearly['energy_cost_joules'].tolist()
             # Create the plot
             # Create the plot
-            fig, ax = plt.subplots(figsize=(10, 5))
+            fig, ax = plt.subplots(figsize=(10, 8))
             ax.plot(dates, energy_costs, marker='o', linestyle='-', color='red')  # Using red to distinguish from frequency plot
             print("plotting energy costs")
 
