@@ -6,3 +6,5 @@ wheel
 tiktoken
 pandas
 matplotlib
+zipfile
+subprocess
