@@ -50,10 +50,24 @@ def upload_file():
             pdf_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'energy_report.pdf')
 
             with PdfPages(pdf_filename) as pdf:
-                # Page 1: Total Energy Consumption (Text)
-                fig_text, ax_text = plt.subplots(figsize=(8, 2))
+                # Page 1: All text on the same page
+                fig_text, ax_text = plt.subplots(figsize=(8, 4))
                 ax_text.axis("off")
-                ax_text.text(0.1, 0.5, f"Total Energy Consumption: {total_joules} Joules", fontsize=14)
+
+                # Calculate grams of CO2
+                grams_co2 = (total_joules * 475) / 3600000
+
+                # Calculate millilitres of water
+                mililitres_water = total_joules / 24
+
+                # Add all text to the same page
+                ax_text.text(0.1, 0.9, f"Total Energy Consumption: {total_joules} Joules", fontsize=16)
+                ax_text.text(0.1, 0.7, f"Over Lifetime You Have Consumed...", fontsize=14)
+                ax_text.text(0.1, 0.55, f"{grams_co2} grams CO2", fontsize=12)
+                ax_text.text(0.1, 0.4, f"{mililitres_water} millilitres of water", fontsize=12)
+                ax_text.text(0.1, 0.25, f"through Chat GPT querying", fontsize=12)
+
+                # Save the page to the PDF
                 pdf.savefig(fig_text)
                 plt.close(fig_text)
 
@@ -76,11 +90,7 @@ def upload_file():
                 # Page 2: Daily Energy Consumption Plot
                 save_plot(daily, "Energy Cost By Day")
 
-                # Page 3: Monthly Energy Consumption Plot
-                save_plot(monthly, "Energy Cost By Month")
-
-                # Page 4: Yearly Energy Consumption Plot
-                save_plot(yearly, "Energy Cost By Year")
+                
 
             print(f"PDF report saved at {pdf_filename}")
             
