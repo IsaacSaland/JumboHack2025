@@ -200,18 +200,21 @@
     <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx" />
     <div id="fileUploadStatus">No file selected</div>
     <button id="countFileButton">Count Tokens from File</button>
-    <p id="result"></p>
+    <pre id="result"></pre>
     <h4>Token Usage</h4>
     <div id="tokenUsage">
-        <p>Current Session Tokens: <span id="currentSessionTokens">0</span></p>
-        <p>Lifetime Tokens: <span id="lifetimeTokens">0</span></p>
+            <p>Current Session Tokens: <span id="currentSessionTokens">0</span></p>
+            <p>Lifetime Tokens: <span id="lifetimeTokens">0</span></p>
+            <p>Total Energy Usage: <span id="totalEnergyUsage">0</span></p>
+            <p>Total CO2 Emmissions: <span id="totalCO2">0</span></p>
+            <p>Water Wasted: <span id="totalwater">0</span></p>
     </div>
 
     <!-- Toggle Switch for Patcher -->
     <div class="switch-container">
         <span class="switch-label">Token Saver</span>
         <label class="switch">
-            <input type="checkbox" id="patchToggle">
+            <input type="checkbox" id="patchToggle" checked>
             <span class="slider"></span>
         </label>
     </div>
