@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
 <html>
-<head>
-    <title>Token Counter</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://unpkg.com;">
-    <script src="cl100k_base.js"></script>
-    <script src="popup.js"></script>
-</head>
-<body>
-    <h3>Token Counter</h3>
-    <textarea id="textInput" placeholder="Enter your text here..." rows="5" cols="30"></textarea>
-    <br><br>
-    <button id="countButton">Count Tokens</button>
-    <p id="result"></p>
-</body>
+        <head>
+                <title>Token Counter</title>
+                <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://unpkg.com;">
+                <script src="pdf.min.js"></script>
+                <script src="mammoth.browser.min.js"></script>
+                <script src="cl100k_base.js"></script>
+                <script src="popup.js"></script>
+        </head>
+        <body>
+        <h3>Token Counter</h3>
+        <textarea id="textInput" placeholder="Enter your text here..." rows="5" cols="30"></textarea>
+        <br><br>
+        <button id="countButton">Count Tokens from Text</button>
+        <br><br>
+        <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx" />
+        <br><br>
+        <button id="countFileButton">Count Tokens from File</button>
+        <p id="result"></p>
+        <h4>Token Usage</h4>
+        <div id="tokenUsage">
+                <p>Current Session Tokens: <span id="currentSessionTokens">0</span></p>
+                <p>Lifetime Tokens: <span id="lifetimeTokens">0</span></p>
+        </div>
+        </body>
 </html>
