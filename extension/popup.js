@@ -1,6 +1,7 @@
 // Constants for energy and emissions calculations
-const WATER_PER_KWH = 1.8; // PROBABLY CHANGE THIS NUMBER
-const CARBON_INTENSITY = 47.5; // g CO₂ per kWh (global average) PROBABLY CHANGE
+const ENERGY_PER_1000_TOKENS = 0.004; // kWh per 1000 tokens
+const WATER_PER_KWH = 1.8; // Liters of water per kWh (example value)
+const CARBON_INTENSITY = 47.5; // kg CO₂ per kWh (global average)
 
 // Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function () {
