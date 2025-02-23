@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask & JavaScript</title>
+    <title>Energy Consumption Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -16,16 +16,15 @@
 
     <div class="outerContain">
         <div class="upload-container">
-            <form method="post" enctype="multipart/form-data" action="/upload"></form>
             <input type="file" id="fileInput" accept=".zip" hidden />
             <label for="fileInput" class="upload-label">
                 <span class="plus">+</span> 
                 <p>Upload ZIP File</p>
             </label>
         </div>
-
         <button id="sendButton" class="send-btn">Send File</button>
     </div>
+
     <div class="lowerAbout">
         <h2>About Us</h2>
         <div class="team-container">
@@ -59,8 +58,6 @@
     <div class="project_des">
         <h1>Project Information</h1>
         Our platform is dedicated to raising awareness about the environmental impact of AI models like ChatGPT, particularly their energy consumption and carbon footprint. By educating users on the hidden costs of large-scale AI operations, we aim to inspire more sustainable tech practices and encourage responsible AI usage.
-
-        ADD RESEARCH PAPER AND MOR
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
@@ -77,12 +74,26 @@
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        throw new Error('File upload failed');
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'energy_report.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    alert('File upload failed. Please try again.');
                 });
             } else {
                 alert('Please select a file to upload.');
